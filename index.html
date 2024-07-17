@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Exámenes Clínicos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+            transition: background 0.3s ease;
+            color: #333;
+        }
+        .dark-mode {
+            background: #121212;
+            color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            width: 190px;
+            height: 254px;
+            border-radius: 30px;
+            background: #e0e0e0;
+            box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+        }
+        .dark-mode .card {
+            background: #212121;
+            box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60);
+        }
+        .card input {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .card .status {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .toggle-switch {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+        }
+        .toggle-switch input {
+            display: none;
+        }
+        .toggle-switch label {
+            background-color: #757575;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            height: 14px;
+            width: 48px;
+            padding: 5px;
+        }
+        .toggle-switch label:before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            transition: 0.2s;
+        }
+        .toggle-switch input:checked + label:before {
+            left: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toggle-switch">
+        <input type="checkbox" id="darkModeToggle">
+        <label for="darkModeToggle"></label>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h3>Creatinina</h3>
+            <input type="number" id="creatinina" oninput="checkValue('creatinina', 0.6, 1.2)">
+            <div class="status" id="creatinina-status"></div>
+        </div>
+        <div class="card">
+            <h3>Colesterol Total</h3>
+            <input type="number" id="colesterol-total" oninput="checkValue('colesterol-total', 100, 200)">
+            <div class="status" id="colesterol-total-status"></div>
+        </div>
+        <div class="card">
+            <h3>HDL</h3>
+            <input type="number" id="hdl" oninput="checkValue('hdl', 40, 60)">
+            <div class="status" id="hdl-status"></div>
+        </div>
+        <div class="card">
+            <h3>LDL</h3>
+            <input type="number" id="ldl" oninput="checkValue('ldl', 0, 100)">
+            <div class="status" id="ldl-status"></div>
+        </div>
+        <div class="card">
+            <h3>Triglicéridos</h3>
+            <input type="number" id="trigliceridos" oninput="checkValue('trigliceridos', 0, 150)">
+            <div class="status" id="trigliceridos-status"></div>
+        </div>
+        <div class="card">
+            <h3>Glucosa</h3>
+            <input type="number" id="glucosa" oninput="checkValue('glucosa', 70, 110)">
+            <div class="status" id="glucosa-status"></div>
+        </div>
+        <div class="card">
+            <h3>Ácido Úrico</h3>
+            <input type="number" id="acido-urico" oninput="checkValue('acido-urico', 2, 7)">
+            <div class="status" id="acido-urico-status"></div>
+        </div>
+        <div class="card">
+            <h3>TSH</h3>
+            <input type="number" id="tsh" oninput="checkValue('tsh', 0.4, 4)">
+            <div class="status" id="tsh-status"></div>
+        </div>
+        <div class="card">
+            <h3>T3</h3>
+            <input type="number" id="t3" oninput="checkValue('t3', 80, 200)">
+            <div class="status" id="t3-status"></div>
+        </div>
+        <div class="card">
+            <h3>T4</h3>
+            <input type="number" id="t4" oninput="checkValue('t4', 4.5, 12)">
+            <div class="status" id="t4-status"></div>
+        </div>
+        <div class="card">
+            <h3>Hemoglobina</h3>
+            <input type="number" id="hemoglobina" oninput="checkValue('hemoglobina', 12, 16)">
+            <div class="status" id="hemoglobina-status"></div>
+        </div>
+        <div class="card">
+            <h3>Leucocitos</h3>
+            <input type="number" id="leucocitos" oninput="checkValue('leucocitos', 4000, 11000)">
+            <div class="status" id="leucocitos-status"></div>
+        </div>
+        <div class="card">
+            <h3>Eritrocitos</h3>
+            <input type="number" id="eritrocitos" oninput="checkValue('eritrocitos', 4.5, 6.5)">
+            <div class="status" id="eritrocitos-status"></div>
+        </div>
+        <div class="card">
+            <h3>Plaquetas</h3>
+            <input type="number" id="plaquetas" oninput="checkValue('plaquetas', 150000, 450000)">
+            <div class="status" id="plaquetas-status"></div>
+        </div>
+        <div class="card">
+            <h3>Neutrófilos</h3>
+            <input type="number" id="neutrofilos" oninput="checkValue('neutrofilos', 2000, 7500)">
+            <div class="status" id="neutrofilos-status"></div>
+        </div>
+        <div class="card">
+            <h3>PCR (Proteína C Reactiva)</h3>
+            <input type="number" id="pcr" oninput="checkValue('pcr', 0, 10)">
+            <div class="status" id="pcr-status"></div>
+        </div>
+        <div class="card">
+            <h3>Hematocrito</h3>
+            <input type="number" id="hematocrito" oninput="checkValue('hematocrito', 36, 48)">
+            <div class="status" id="hematocrito-status"></div>
+        </div>
+        <div class="card">
+            <h3>Presión Arterial</h3>
+            <input type="text" id="presion-arterial" oninput="checkPressure('presion-arterial')">
+            <div class="status" id="presion-arterial-status"></div>
+        </div>
+        <div class="card">
+            <h3>Pulsaciones por Minuto (BPM)</h3>
+            <input type="number" id="bpm" oninput="checkValue('bpm', 60, 100)">
+            <div class="status" id="bpm-status"></div>
+        </div>
+    </div>
+
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('change', () => {
+            body.classList.toggle('dark-mode');
+        });
+
+        function checkValue(id, min, max) {
+            const value = parseFloat(document.getElementById(id).value);
+            const status = document.getElementById(id + '-status');
+            if (isNaN(value)) {
+                status.textContent = '';
+                return;
+            }
+            if (value < min) {
+                status.textContent = 'Bajo';
+                status.style.color = 'blue';
+            } else if (value > max) {
+                status.textContent = 'Alto';
+                status.style.color = 'red';
+            } else {
+                status.textContent = 'Normal';
+                status.style.color = 'green';
+            }
+        }
+
+        function checkPressure(id) {
+            const value = document.getElementById(id).value;
+            const status = document.getElementById(id + '-status');
+            const [systolic, diastolic] = value.split('/').map(v => parseFloat(v.trim()));
+            if (isNaN(systolic) || isNaN(diastolic)) {
+                status.textContent = '';
+                return;
+            }
+            if (systolic < 90 || diastolic < 60) {
+                status.textContent = 'Bajo';
+                status.style.color = 'blue';
+            } else if (systolic > 140 || diastolic > 90) {
+                status.textContent = 'Alto';
+                status.style.color = 'red';
+            } else {
+                status.textContent = 'Normal';
+                status.style.color = 'green';
+            }
+        }
+    </script>
+</body>
+</html>
